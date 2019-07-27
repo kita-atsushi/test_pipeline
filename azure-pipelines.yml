@@ -18,9 +18,8 @@ variables:
 jobs:
 - job: Lint
   steps:
-  - script: |
-      curl -sSL https://github.com/hadolint/hadolint/releases/download/${DOCKER_LINT_VER}/hadolint-Linux-x86_64 -o /tmp/hadolint-Linux-x86_64 && chmod +x /tmp/hadolint-Linux-x86_64
-      /tmp/hadolint-Linux-x86_64 Dockerfile
+  - script: curl -sSL https://github.com/hadolint/hadolint/releases/download/${DOCKER_LINT_VER}/hadolint-Linux-x86_64 -o /tmp/hadolint-Linux-x86_64 && chmod +x /tmp/hadolint-Linux-x86_64
+  - script: /tmp/hadolint-Linux-x86_64 Dockerfile
 - job: Build
   steps:
   - script: |
