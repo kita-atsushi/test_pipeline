@@ -28,5 +28,6 @@ jobs:
   - script: |
       docker build -t myapi:$(APP_VER) .
       docker login -u $(DOCKER_USERID) -p $(DOCKER_PASSWORD) $(DOCKER_SERVER)
+      docker tag myapi:$(APP_VER) $(DOCKER_SERVER)/myapi:$(APP_VER)
       docker push $(DOCKER_SERVER)/myapi:$(APP_VER)
   displayName: 'Build docker image'
