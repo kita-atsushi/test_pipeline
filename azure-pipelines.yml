@@ -12,8 +12,11 @@ trigger:
 
 name: $(Date:yyyyMMdd)$(Rev:.r)
 variables:
-  DOCKER_LINT_VER: v1.17.1
-  APP_VER: v0.1
+  - group: MyTestCRegistryParameter
+  - name: DOCKER_LINT_VER
+    value: v1.17.1
+  - name: APP_VER
+    value: v0.1
 
 jobs:
 - job: Lint
@@ -24,5 +27,6 @@ jobs:
   steps:
   - script: |
       docker build -t myapi:${APP_VER} .
+      docker login -u ${DOCKER_USERID} -p ${DOCKER_PASSWORD} ${DOCKER_SERVER}
+      docker push ${DOCKER_SERVER}/myapi:${APP_VER}
   displayName: 'Build docker image'
-
