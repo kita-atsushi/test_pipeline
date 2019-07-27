@@ -21,12 +21,12 @@ variables:
 jobs:
 - job: Lint
   steps:
-  - script: curl -sSL https://github.com/hadolint/hadolint/releases/download/${DOCKER_LINT_VER}/hadolint-Linux-x86_64 -o /tmp/hadolint-Linux-x86_64 && chmod +x /tmp/hadolint-Linux-x86_64
+  - script: curl -sSL https://github.com/hadolint/hadolint/releases/download/$(DOCKER_LINT_VER)/hadolint-Linux-x86_64 -o /tmp/hadolint-Linux-x86_64 && chmod +x /tmp/hadolint-Linux-x86_64
   - script: /tmp/hadolint-Linux-x86_64 Dockerfile
 - job: Build
   steps:
   - script: |
-      docker build -t myapi:${APP_VER} .
-      docker login -u ${DOCKER_USERID} -p ${DOCKER_PASSWORD} ${DOCKER_SERVER}
-      docker push ${DOCKER_SERVER}/myapi:${APP_VER}
+      docker build -t myapi:$(APP_VER) .
+      docker login -u $(DOCKER_USERID) -p $(DOCKER_PASSWORD) $(DOCKER_SERVER)
+      docker push $(DOCKER_SERVER)/myapi:$(APP_VER)
   displayName: 'Build docker image'
