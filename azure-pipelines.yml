@@ -2,17 +2,19 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
+---
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
+# pool:
+#   name: DevOpsHost
+#   vmImage: 'ubuntu-latest'
 
 name: $(Date:yyyyMMdd)$(Rev:.r)
 variables:
   DOCKER_LINT_VER: v1.17.1
   APP_VER: v0.1
+
 jobs:
 - job: Lint
   steps:
@@ -24,3 +26,4 @@ jobs:
   - script: |
       docker build -t myapi:${APP_VER} .
   displayName: 'Build docker image'
+
