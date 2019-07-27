@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+---
+trigger:
+- master
+
+# pool:
+#   name: DevOpsHost
+#   vmImage: 'ubuntu-latest'
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+variables:
+  - group: MyTestCRegistryParameter
+  - name: DOCKER_LINT_VER
+    value: v1.17.1
+  - name: APP_VER
+    value: v0.1
+
+jobs:
+- job: Lint
+  steps:
+  - script: curl -sSL https://github.com/hadolint/hadolint/releases/download/$(DOCKER_LINT_VER)/hadolint-Linux-x86_64 -o /tmp/hadolint-Linux-x86_64 && chmod +x /tmp/hadolint-Linux-x86_64
+  - script: /tmp/hadolint-Linux-x86_64 Dockerfile
+- job: Build
+  steps:
+  - script: |
+      docker build -t myapi:$(APP_VER) .
+      docker login -u $(DOCKER_USERID) -p $(DOCKER_PASSWORD) $(DOCKER_SERVER)
+      docker tag myapi:$(APP_VER) $(DOCKER_SERVER)/myapi:$(APP_VER)
+      docker push $(DOCKER_SERVER)/myapi:$(APP_VER)
+  displayName: 'Build docker image'
