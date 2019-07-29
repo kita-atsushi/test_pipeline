@@ -54,4 +54,4 @@ stages:
           - task: DownloadPipelineArtifact@1
             inputs:
               artifactName: manifests
-              downloadPath: '$(System.ArtifactsDirectory)/manifests'
+              downloadPath: 'manifests'
