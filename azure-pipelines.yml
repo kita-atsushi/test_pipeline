@@ -41,17 +41,3 @@ stages:
         artifactName: manifests
         targetPath: manifests
 
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: BuildAndPush
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy job
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DownloadPipelineArtifact@1
-            inputs:
-              artifactName: manifests
-              downloadPath: manifests
