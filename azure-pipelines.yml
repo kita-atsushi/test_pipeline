@@ -26,10 +26,10 @@ stages:
     - script: curl -sSL https://github.com/hadolint/hadolint/releases/download/$(DOCKER_LINT_VER)/hadolint-Linux-x86_64 -o /tmp/hadolint-Linux-x86_64 && chmod +x /tmp/hadolint-Linux-x86_64
     - script: /tmp/hadolint-Linux-x86_64 Dockerfile
 
-- stage: BuildAndPush
+- stage: Build
   dependsOn: Check
   jobs:
-  - job: BuildAndStoreImage
+  - job: Build
     steps:
     - script: |
         docker build -t myapi:$(APP_VER) .
@@ -40,4 +40,3 @@ stages:
       inputs:
         artifactName: manifests
         targetPath: $(Build.ArtifactStagingDirectory)
-
