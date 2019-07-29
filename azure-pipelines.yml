@@ -39,5 +39,5 @@ stages:
     - task: PublishPipelineArtifact@0
       inputs:
         artifactName: manifests
-        targetPath: manifests
+        targetPath: $(Build.ArtifactStagingDirectory)
 
