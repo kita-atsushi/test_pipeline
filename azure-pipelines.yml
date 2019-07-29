@@ -26,7 +26,7 @@ stages:
     - script: curl -sSL https://github.com/hadolint/hadolint/releases/download/$(DOCKER_LINT_VER)/hadolint-Linux-x86_64 -o /tmp/hadolint-Linux-x86_64 && chmod +x /tmp/hadolint-Linux-x86_64
     - script: /tmp/hadolint-Linux-x86_64 Dockerfile
 
-- stage: Build
+- stage: BuildAndStore
   dependsOn: Check
   jobs:
   - job: Build
@@ -38,4 +38,20 @@ stages:
         docker push $(DOCKER_SERVER)/myapi:$(APP_VER)
     - task: PublishPipelineArtifact@0
       inputs:
+        artifactName: 'manifests'
         targetPath:
+
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy job
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadPipelineArtifact@1
+            inputs:
+              artifactName: 'manifests'
+              downloadPath: '$(System.ArtifactsDirectory)/manifests'
