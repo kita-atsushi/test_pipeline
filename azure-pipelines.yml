@@ -60,7 +60,6 @@ stages:
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
             inputs:
-              kubernetesServiceConnection: k8stest-myfirstresourceg-f40cda-ee5e1378.hcp.japaneast.azmk8s.io
               action: deploy
               namespace: default
               manifests: |
