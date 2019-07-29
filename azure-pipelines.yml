@@ -39,7 +39,7 @@ stages:
     - task: PublishPipelineArtifact@0
       inputs:
         artifactName: manifests
-        targetPath: /tmp/manifests
+        targetPath: manifests
 
 - stage: Deploy
   displayName: Deploy stage
@@ -53,5 +53,5 @@ stages:
           steps:
           - task: DownloadPipelineArtifact@1
             inputs:
-              artifactName: /tmp/manifests
+              artifactName: manifests
               downloadPath: '$(System.ArtifactsDirectory)/manifests'
