@@ -47,6 +47,7 @@ stages:
   jobs:
   - deployment: Deploy
     displayName: Deploy job
+    environment: "deploy test"
     strategy:
       runOnce:
         deploy:
