@@ -38,5 +38,4 @@ stages:
         docker push $(DOCKER_SERVER)/myapi:$(APP_VER)
     - task: PublishPipelineArtifact@0
       inputs:
-        artifactName: manifests
         targetPath: $(Build.ArtifactStagingDirectory)
