@@ -43,7 +43,7 @@ stages:
 
 - stage: Deploy
   displayName: Deploy stage
-  dependsOn: Build
+  dependsOn: BuildAndStore
   jobs:
   - deployment: Deploy
     displayName: Deploy job
