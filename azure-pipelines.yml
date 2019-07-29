@@ -28,14 +28,11 @@ stages:
 - stage: BuildAndPush
   dependsOn: Check
   jobs:
-  - job: Build
+  - job: BuildAndStoreImage
     steps:
-    - script: docker build -t myapi:$(APP_VER) .
+    - script: |
+        docker build -t myapi:$(APP_VER) .
+        docker login -u $(DOCKER_USERID) -p $(DOCKER_PASSWORD) $(DOCKER_SERVER)
+        docker tag myapi:$(APP_VER) $(DOCKER_SERVER)/myapi:$(APP_VER)
+        docker push $(DOCKER_SERVER)/myapi:$(APP_VER)
     displayName: 'Build docker image'
-  - job: PushImage
-    steps:
-    - script: docker login -u $(DOCKER_USERID) -p $(DOCKER_PASSWORD) $(DOCKER_SERVER)
-    - script: docker tag myapi:$(APP_VER) $(DOCKER_SERVER)/myapi:$(APP_VER)
-    - script: docker push $(DOCKER_SERVER)/myapi:$(APP_VER)
-    displayName: 'PushImage'
-
