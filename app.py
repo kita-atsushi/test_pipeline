@@ -10,3 +10,8 @@ def hello(name):
 def hi(name):
     """Says Hi to a user"""
     return "Hi {}!".format(name)
+
+@hug.get('/namaste')
+def hi(name):
+    """Says namaste to a user"""
+    return "Namaste {}!".format(name)
