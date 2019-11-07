@@ -13,5 +13,5 @@ def hi(name):
 
 @hug.get('/namaste')
 def hi(name):
-    """Says Hi to a user"""
-    return "Hi {}!".format(name)
+    """Says namaste to a user"""
+    return "Namaste {}!".format(name)
